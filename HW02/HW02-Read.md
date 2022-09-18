@@ -10,7 +10,7 @@
 #include <queue>: C++에서 제공하는 큐 라이브러리   
 queue<int> Q : Q라는 이름의 int 요소들로 구성된 큐 선언   
 Q.push: 원소 삽입   
-Q.empty: 비었으면 true 반환, 비어있지 않으면 False 반환   
+Q.empty: 비었으면 true 반환, 비어있지 않으면 false 반환   
 Q.top: 루트 값 반환   
 Q.pop: 루트 값 제거   
 Q.front(): 큐의 front 를 반환   
