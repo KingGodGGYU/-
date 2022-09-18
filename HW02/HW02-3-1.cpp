@@ -7,12 +7,12 @@ int main() {
     int arr = 0;
     cin >> testcase;
     int* order = new int[testcase];
-    int N,M,priority;//문서의 개수, 궁금한 문서 현재 Queue에서 몇 번째에 놓여 있는지를 나타내는 정수, N개 문서의 중요도
+    int N,M,priority;
     for (int i=0; i<testcase; i++){
         cnt=0;
         cin>>N>>M;
         queue<pair<int, int>> q;
-        priority_queue<int> pq; // 우선순위 큐
+        priority_queue<int> pq;
         for (int j = 0; j<N; j++) {
             cin >> priority;
             q.push({j, priority});
