@@ -17,6 +17,8 @@ Q.pop: 루트 값 제거
 Q.front(): 큐의 front 를 반환
 Q.back(): 큐의 back를 반환
 
+<pre>
+<code>
 //C++에서의 우선순위 큐 사용(STL 이용), "HW02-2.cpp" 파일 업로드 확인
 #include <iostream>
 #include <queue>
@@ -57,9 +59,12 @@ int main() {
 	
 	return 0;
 }
+</code>
+</pre>
 
 3-1. 백준 1966
-
+<pre>
+<code>
 //"HW02-3-1.cpp" C++ 파일 확인
 #include <iostream>
 #include <queue>
@@ -103,4 +108,6 @@ int main() {
     delete[] order;
     return 0;
 }
+</code>
+</pre>
 3-2. 백준 1655
