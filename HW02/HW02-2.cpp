@@ -1,10 +1,10 @@
-//C++¿¡¼­ÀÇ ¿ì¼±¼øÀ§ Å¥ »ç¿ë(STL ÀÌ¿ë)
+//C++ì—ì„œì˜ ìš°ì„ ìˆœìœ„ í ì‚¬ìš©
 #include <iostream>
 #include <queue>
 using namespace std;
 
 int main() {
-	//ÃÖ´ëÈü
+	//ìµœëŒ€í™
 	priority_queue<int, vector<int>, less<int>> MaxHeap;
 	MaxHeap.push(15);
 	MaxHeap.push(5);
@@ -20,7 +20,7 @@ int main() {
 	}
 	cout<<endl;
 
-	//ÃÖ¼ÒÈü
+	//ìµœì†Œí™
 	priority_queue<int, vector<int>, greater<int>> MinHeap;
 	MinHeap.push(15);
 	MinHeap.push(5);
