@@ -230,5 +230,5 @@ public:
 ```
 
 #### 코드 도움   
-###### LeetCode profile: [Ashfan Khan](https://leetcode.com/ask1631/, "LeetCode Profile")   
-###### LeetCode profile: [Chandan_393](https://leetcode.com/Chandan_393/, "LeetCode Profile")
+###### LeetCode profile: [Ashfan Khan](https://leetcode.com/ask1631/ "LeetCode Profile")   
+###### LeetCode profile: [Chandan_393](https://leetcode.com/Chandan_393/ "LeetCode Profile")
