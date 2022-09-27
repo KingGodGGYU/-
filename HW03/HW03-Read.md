@@ -48,16 +48,210 @@ __Big-O 란?__
   * Compare: O(1)
   * Insert: O(log n)
 ## 3. 문제풀이
-# 98
+### 98
 ```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool res=true; 
+    void solve(TreeNode *root, int n, bool flag)
+    {
+        if(root==NULL) return;
+        if(flag and n<=root->val){
+            res=false; return;
+        }
+        if(!flag and n>=root->val){
+            res=false; return;
+        }
+        solve(root->left, n, flag);
+        solve(root->right, n, flag);
+    }
+    
+    void inorder(TreeNode *root){
+        if(root==NULL) return;
+        if(root->left) solve(root->left, root->val, true);
+        if(root->right) solve(root->right, root->val, false);
+        inorder(root->left);
+        inorder(root->right);
+    }
+    
+    bool isValidBST(TreeNode* root) {
+        inorder(root);
+        return res;
+    }
+};
 ```
-# 99
+### 99
 ```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+    TreeNode*first;
+    TreeNode*prev;
+    TreeNode*mid;
+    TreeNode*last;
+    void inorder(TreeNode*root)
+    {
+        if(root==NULL)
+        {
+            return;
+        }
+        inorder(root->left);
+        if(prev!=NULL && (root->val<prev->val))
+        {
+            if(first==NULL)
+            {
+                first=prev;
+                mid=root;
+            }
+            else
+            {
+                last=root;
+            }
+        }
+        prev=root;
+        inorder(root->right);
+    }
+
+public:
+    void recoverTree(TreeNode* root) {
+        first=NULL;
+        mid=NULL;
+        last=NULL;
+        prev=new TreeNode(INT_MIN);
+        inorder(root);
+        if(first&& last)
+        {
+            swap(first->val,last->val);
+        }
+        else if(first && mid)
+        {
+            swap(first->val,mid->val);
+        }
+    }
+};
 ```
-# 700
+### 700
 ```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        {
+            if(root==NULL)
+            {
+                return root;
+            }
+            else if(root->val>val)
+            {
+                return searchBST(root->left,val);
+            }
+            else if(root->val<val)
+                return searchBST(root->right,val);
+            else
+                return root;
+        }   
+    }
+};
 ```
-# 701
+### 701
 ```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) 
+    {
+        TreeNode* n=new TreeNode;
+        n->val=val;
+        n->left=NULL;
+        n->right=NULL;
+        TreeNode* ptr=root;
+        if(root==NULL)
+        {
+            root=n;
+        }
+        else
+        {
+            while(1)
+            {
+                if(n->val==ptr->val)
+                {
+                    delete n;
+                    break;
+                }
+                else if(n->val<ptr->val)
+                {
+                    if(ptr->left!=NULL)
+                    {
+                        ptr=ptr->left;
+                    }
+                    else
+                    {
+                        ptr->left=n;
+                        break;
+                    }
+                }
+                else
+                {
+                    if(ptr->right!=NULL)
+                    {
+                        ptr=ptr->right;
+                        
+                    }
+                    else
+                    {
+                        ptr->right=n;
+                        break;
+                    }
+                }
+            }
+        }
+        return root;
+    }
+};
 ```
+
+코드 도움   
+LeetCode profile: [Ashfan Khan](https://leetcode.com/ask1631/, "LeetCode Profile")   
+LeetCode profile: [Chandan_393](https://leetcode.com/Chandan_393/, "LeetCode Profile")
+
 # 백준 5693
