@@ -25,8 +25,88 @@ __key(왼쪽서브트리)≤key(루트노드)≤key(오른쪽서브트리)__
 >   * 단말 노드를 삭제할 경우, 단말노드의 부모노드를 찾아서 연결을 끊는다.
 >   * 하나의 왼쪽이나 오른쪽 서브 트리(자식이 하나)중 하나만 가지고 있는 경우, 노드는 삭제하고 서브 트리는 부모 노드에 붙여준다.
 >   * 두 개의 자식을 가진 노드를 삭제할 경우, 가장 비슷한 값을 가진 노드를 삭제 노드 위치로 가져온 후 후계 노드 중 선택한다.
+```C++
+void remove(BinaryNode* parent, BinaryNode* node){
+	// case 1
+	if (node->isLeaf()) {
+		if (parent == NULL) root = NULL;
+		else {
+			if (parent->getLeft() == node)
+				parent->setLeft(NULL);
+			else
+				parent->setRight(NULL);
+		}
+	}
+	// case 2
+	else if (node->getLeft() == NULL || node->getRight() == NULL) {
+		BinaryNode* child = (node->getLeft() != NULL)
+			? node->getLeft() : node->getRight();
+		if (node == root)
+			root = child;
+		else {
+			if (parent->getLeft() == node)
+				parent->setLeft(child);
+			else
+				parent->setRight(child);
+		}
+	}
+	// case 3
+	else{
+		BinaryNode* succp = node;
+		BinaryNode* succ = node->getRight();
+		while(succ->getLeft() != NULL) {
+			succp = succ;
+			succ = succ-> getLeft();
+		}
+		if (succp->getLeft() == succ)
+			succp->setLeft(succ->getRight());
+		else
+			succp->setRight(succ->getRight());
+		node->setData(succ->getData());
+		node = succ;
+	}
+	delete node;
+}
+```
 > * __search(key)__ : 키 값이 key인 노드를 찾아 반환한다.
->   * 이진 탐색 트리에 원소를 삽입하기 위해서는 먼저 탐색을 수행하는 것이 필요한데, 탐색에 실패한 위치가 바로 새로운 노드를 삽입하는 위치이다.
+>   * 이진 탐색 트리에 원소를 삽입하기 위해서는 먼저 탐색을 수행하는 것이 필요한데, 탐색에 실패한 위치가 바로 새로운 노드를 삽입하는 위치이다. 비교한 결과가 같으면 탐색이 성공적으로 끝나며 __키 값이 루트보다 작으면 왼쪽 자식을 기준__ 으로, __키 값이 루트보다 크면 오른쪽 자식을 기준__ 으로 다시 탐색한다. 
+>   * 탐색연산의 구현에는 다양한 방법이 있는데 순환적으로 혹은 반복적으로 구현할 수 있으며 동시에 일반 함수로, 트리의 멤버함수로, 그리고 노드의 멤버함수로 구현할 수 있다. 
+```C++
+//순환적인 일반함수 구현
+BinaryNode* searchRecur(BinaryNode* n, int key)
+{
+	if (n == NULL) return NULL; // n이 NULL
+	if (key == n->getData()) // (1) key == 현재노드의 data
+		return n;
+	else if (key < n->getData()) // (2) key < 현재노드의 data
+		return searchRecur(n->getLeft(), key);
+	else // (3) key > 현재노드의 data
+		return searchRecur(n->getRight(), key);
+}
+//반복적인 일반함수 구현
+BinaryNode* searchIter(BinaryNode* n, int key)
+{
+	while (n != NULL) {
+		if (key == n->getData()) return n;
+		else if (key < n->getData())
+			n = node->getLeft();
+		else n = node->getRight();
+	}
+	return NULL;
+}
+//노드의 멤버함수로 구현(순환적)
+BinaryNode* BinaryNode::search(int key)
+{
+	if (key == data) // (1) key == 현재노드의 data
+		return this;
+	else if (key < data && left != NULL) // (2) key < 현재노드의 data
+		return left->search(key);
+	else if (key > data && right != NULL) // (3) key > 현재노드의 data
+		return right->search(key);
+	else // (4) 찾는 노드 없음
+		return NULL;
+}
+```
 
 ### 이진 탐색 트리의 성능
 이진 탐색 트리에서의 시간 복잡도는 트리의 높이를 h라고 했을때 h에 비례한다.   
