@@ -109,22 +109,17 @@ class Solution {
     TreeNode*prev;
     TreeNode*mid;
     TreeNode*last;
-    void inorder(TreeNode*root)
-    {
-        if(root==NULL)
-        {
+    void inorder(TreeNode*root){
+        if(root==NULL){
             return;
         }
         inorder(root->left);
-        if(prev!=NULL && (root->val<prev->val))
-        {
-            if(first==NULL)
-            {
+        if(prev!=NULL && (root->val<prev->val)){
+            if(first==NULL){
                 first=prev;
                 mid=root;
             }
-            else
-            {
+            else{
                 last=root;
             }
         }
@@ -154,7 +149,7 @@ public:
 ```C++
 /**
  * Definition for a binary tree node.
- * struct TreeNode {
+ * struct TreeNode{
  *     int val;
  *     TreeNode *left;
  *     TreeNode *right;
@@ -165,22 +160,18 @@ public:
  */
 class Solution {
 public:
-    TreeNode* searchBST(TreeNode* root, int val) {
-        {
-            if(root==NULL)
-            {
+    TreeNode* searchBST(TreeNode* root, int val){
+            if(root==NULL){
                 return root;
             }
-            else if(root->val>val)
-            {
+            else if(root->val>val){
                 return searchBST(root->left,val);
             }
             else if(root->val<val)
                 return searchBST(root->right,val);
             else
                 return root;
-        }   
-    }
+        }
 };
 ```
 ### 701
@@ -198,47 +189,35 @@ public:
  */
 class Solution {
 public:
-    TreeNode* insertIntoBST(TreeNode* root, int val) 
-    {
+    TreeNode* insertIntoBST(TreeNode* root, int val){
         TreeNode* n=new TreeNode;
         n->val=val;
         n->left=NULL;
         n->right=NULL;
         TreeNode* ptr=root;
-        if(root==NULL)
-        {
+        if(root==NULL){
             root=n;
         }
-        else
-        {
-            while(1)
-            {
-                if(n->val==ptr->val)
-                {
+        else{
+            while(1){
+                if(n->val==ptr->val){
                     delete n;
                     break;
                 }
-                else if(n->val<ptr->val)
-                {
-                    if(ptr->left!=NULL)
-                    {
+                else if(n->val<ptr->val){
+                    if(ptr->left!=NULL){
                         ptr=ptr->left;
                     }
-                    else
-                    {
+                    else{
                         ptr->left=n;
                         break;
-                    }
+                        }
                 }
-                else
-                {
-                    if(ptr->right!=NULL)
-                    {
+                else{
+                    if(ptr->right!=NULL){
                         ptr=ptr->right;
-                        
                     }
-                    else
-                    {
+                    else{
                         ptr->right=n;
                         break;
                     }
@@ -246,12 +225,10 @@ public:
             }
         }
         return root;
-    }
+     }
 };
 ```
 
 ##### 코드 도움   
 ###### LeetCode profile: [Ashfan Khan](https://leetcode.com/ask1631/, "LeetCode Profile")   
 ###### LeetCode profile: [Chandan_393](https://leetcode.com/Chandan_393/, "LeetCode Profile")
-
-# 백준 5693
