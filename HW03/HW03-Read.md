@@ -7,8 +7,8 @@ __key(왼쪽서브트리)≤key(루트노드)≤key(오른쪽서브트리)__
 ### 이진탐색트리의 연산
 > * __insert(n)__ : 이진 탐색 트리의 특성을 유지하면서 새로운 노드 n을 이진 탐색 트리에 삽입한다.
 >   * 삽입 연산 구현
->   ```C++
->   void insertRecur( BinaryNode* r, BinaryNode* n ) {
+```C++
+    void insertRecur( BinaryNode* r, BinaryNode* n ) {
        if( n->getData() == r->getData() )
               return;
          else if( n->getData() < r->getData() ) {
@@ -20,7 +20,7 @@ __key(왼쪽서브트리)≤key(루트노드)≤key(오른쪽서브트리)__
               else insertRecur( r->getRight(), n );
          }
      }
->   ```   
+```   
 > * __remove(n)__ : 이진 탐색 트리의 특성을 유지하면서 노드 n을 트리에서 삭제한다.
 >   * 단말 노드를 삭제할 경우, 단말노드의 부모노드를 찾아서 연결을 끊는다.
 >   * 하나의 왼쪽이나 오른쪽 서브 트리(자식이 하나)중 하나만 가지고 있는 경우, 노드는 삭제하고 서브 트리는 부모 노드에 붙여준다.
