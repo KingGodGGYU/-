@@ -17,7 +17,7 @@ __Big-O 란?__
 |O(n)|n개 입력, 최악의 경우 n번 실행|
 |O(log n)|n개 입력, 최악의 경우 log n번 실행|
 |O(1)|n개 입력, 최악의 경우 1번 실행|   
-![Big-O_Comparison](./img/Big_o.jpg)   
+   ![Big-O_Comparison](./img/Big_o.jpg)   
 ## 3. 문제풀이
 # 98
 ```C++
