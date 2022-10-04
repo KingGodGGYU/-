@@ -49,4 +49,4 @@ public:
     }
 };
 ```
-![Balanced Binary Tree Problem Result](HW04_3.jpg)  
+![Balanced Binary Tree Problem Result](HW04_3.png)  
