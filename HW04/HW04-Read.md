@@ -81,7 +81,7 @@ int main()
     cout << "Rank of " << x << " in stream is: "
         << getRank(root, x) << endl;
     return 0;
-}
+} // 코드 출처 geeksforgeeks
 ```
 ![Rank 구현](rank.png)  
 - AVL tree 구현
@@ -344,7 +344,7 @@ int main()
 
 	preOrder(root);
 	return 0;
-}
+} //코드 출처 geeksforgeeks
 ```
 ![AVL tree 구현](AVL.PNG)  
 
