@@ -346,7 +346,7 @@ int main()
 	return 0;
 }
 ```
-![AVL tree 구현](AVL.png)  
+![AVL tree 구현](AVL.PNG)  
 
 ## 2. AVL tree 정의 등 강의 내용 정리
 ### AVL Tree 란?
