@@ -83,6 +83,7 @@ int main()
     return 0;
 }
 ```
+![Rank 구현](rank.png)  
 - AVL tree 구현
 ```C++
 #include <iostream>
@@ -345,7 +346,8 @@ int main()
 	return 0;
 }
 ```
- 
+![AVL tree 구현](AVL.png)  
+
 ## 2. AVL tree 정의 등 강의 내용 정리
 ### AVL Tree 란?
 AVL 트리는 스스로 균형을 맞추는 이진탐색트리로, 는 왼쪽과 오른쪽 서브 트리의 높이 차이가 최대 1이다. 트리의 높이가 h 일때 시간복잡도는 O(h)이다. 
