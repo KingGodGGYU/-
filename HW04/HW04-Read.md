@@ -20,7 +20,17 @@ AVL 트리는 스스로 균형을 맞추는 이진탐색트리로, 는 왼쪽과
 ### 회전
 AVL트리는 이진 탐색 트리이기 때문에 삽입과 삭제 연산도 이진 탐색 트리에서 했던 방식 그대로 사용한다. 그러면 AVL의 높이는 어떻게 맞추냐, 바로 __회전__ 이다. 일단 이진 탐색 트리에서 사용하는 삽입 연산을 한 후 균형을 맞춘다. 회전에는 두 방향으로 __Left Rotation__ 과 __Right Rotation__ 이 존재하며 노드의 배열에 따라 4가지 불균형 __(LL, RR, LR, RL)__ 이 발생한다.
 > * LL(Left Left) Case
->   * 
+>   * y는 z의 왼쪽 자식 노드이고, x는 y의 왼쪽 자식 노드인 경우 right rotation을 수행한다.
+>   * ![LL case](LL.png)
+> * RR(Right Right) Case  
+>   * y는 z의 오른쪽 자식 노드이고, x는 y의 오른쪽 자식 노드인 경우 left rotation을 수행한다.
+>   * ![RR case](RR.png)
+> * LR(Left Right) Case
+>   * y는 z의 왼쪽 자식 노드이고, x는 y의 오른쪽 자식 노드인 경우 left, right 순으로 총 두 번의 rotation을 수행한다.
+>   * ![LR case](LR.png)
+> * RL(Right Left) Case
+>   * y는 z의 오른쪽 자식 노드이고, x는 y의 왼쪽 자식 노드인 경우, right, left 순으로 총 두번의 rotation을 수행한다.
+>   * ![RL case](RL.png)  
 
 ## 3. Leet code 문제 풀이
 ```C++
