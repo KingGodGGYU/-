@@ -105,3 +105,66 @@ void BFS_docks(vector<int> _docks) {//정거장이 여러개
 		}
 		
 ```
+
+코드 정리
+```C++
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <list>
+using namespace std;
+class CGraph {
+	int n_vertices;
+	bool* visited;
+	vector<list<int>> adj;
+	vector<int> dist;
+public:
+	CGraph(int _n) {
+		this->n_vertices = _n;
+		visited = new bool[_n];
+		for (int i = 0; i < _n; i++) {
+			visited[i] = false;
+		}
+		adj.resize(_n); //초기화
+		adj.resize(_n);
+	}
+	~CGraph() {
+		delete visited;
+	}
+	void addUndirectedEdge(int _s, int _d) {
+		adj[_s].push_back(_d);
+		adj[_d].push_back(_s);
+		//방향 없음
+	}
+	void addEdge(int _s, int _d) {
+		adj[_s].push_back(_d); //방향 있음
+	}
+	void BFS_dock(int _s) { // 정거장이 하나 
+		visited[_s] = true;// 루트 노드 방문 처리 
+		queue<int> Q; // 큐를 만듦
+		Q.push(_s); // 시작점 _s를 큐에 넣음 
+		while (!Q.empty()) { // 큐에 더이상 정점이 남아있지 않을 때까지 반복
+			_s = Q.front(); // 큐에 가장 먼저 들어간 정점의 값을 꺼냄
+			Q.pop(); // 꺼낸 큐의 정점은 큐에서 삭제 
+			list<int>::iterator iter; 
+				for (iter = adj[_s].begin(); iter != adj[_s].end(); ++iter) {
+					if (!visited[*iter]) { // 방문 하지 않은 노드의 경우 방문 처리
+						visited[*iter] = true; // _s 근처의 *iter 정점 중 방문하지 않은 경우 방문
+						Q.push(*iter); // 방문한 근처 정점 *iter를 큐에 넣음
+						dist[*iter] = dist[_s] + 1; // _s+1만큼 떨어져 있음
+					}
+				}
+		}
+	}
+	void DFS(int _s) {
+		visited[_s] = true;
+		//cout << _s << " ";
+		list<int>::iterator iter;
+		for (iter = adj[_s].begin(); iter != adj[_s].end(); iter++) {
+			if (!visited[*iter]) {
+				DFS(*iter);
+			}
+		}
+	}
+};
+```
