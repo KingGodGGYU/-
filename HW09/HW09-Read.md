@@ -11,4 +11,15 @@
     - Back Tracking: 다시 돌아가서 탐색하지 않은 정점이 있는지 확인하는 단계
   7. 스택이 빌 때 까지 3~5단계를 반복한다.
   8. 스택이 비게되면 사용하지 않은 간선들을 삭제해서 스패닝 트리를 형성한다. 
+ 
 ```C++
+void DFS(int _s) {
+		visited[_s] = true;
+		list<int>::iterator iter;
+		for (iter = adj[_s].begin(); iter != adj[_s].end(); iter++) {
+			if (!visited[*iter]) {
+				DFS(*iter);
+			}
+		}
+	}
+```
