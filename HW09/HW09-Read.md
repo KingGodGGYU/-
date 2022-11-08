@@ -31,16 +31,21 @@ void DFS(int _s) {
 ```
 ## 이진트리에서의 깊이우선탐색 - 중의 순회(InOrder)
 이진트리에서 깊이우선탐색의 방법
-1. InOrder
-2. PreOrder
-3. PostOrder
+1. InOrder: Left → Push → Right
+2. PreOrder: Push → Left → Right
+3. PostOrder: Left → Right → Push
+
+학교에서 다뤘던 InOrder를 설명하겠다.   
+쉽게 말해서 
 ```C++
 DFSInOrder() {
     const data = [];
     function traverse(node) {
-      if (node.left) traverse(node.left);
-      data.push(node.value); // 다른 DFS와 비교하면 이 라인의 위치만 다름
-      if (node.right) traverse(node.right);
+      if (node.left) 
+      	traverse(node.left);
+      	data.push(node.value); // 다른 DFS와 비교하면 이 라인의 위치만 다름
+      if (node.right) 
+      	traverse(node.right);
     }
     traverse(this.root);
     return data;
@@ -59,7 +64,6 @@ DFSInOrder() {
 __BFS 과정 그림으로 확인__
 ![BFS-1](HW09-13.jpg)
 ![BFS-2](HW09-14.jpg)
-![BFS-3](HW09-15.jpg)
 ### 경로 : A → D → E → B → C → F → G   
 ```C++
 void BFS_dock(int _s) { // 정거장이 하나 
