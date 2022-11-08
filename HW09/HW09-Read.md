@@ -15,6 +15,7 @@
 ![DFS-1](HW09-10.jpg)  
 ![DFS-2](HW09-11.jpg)  
 ![DFS-3](HW09-12.jpg)  
+__결과: D→G→F→E→C→B→A__   
 ```C++
 void DFS(int _s) {
 		visited[_s] = true;
