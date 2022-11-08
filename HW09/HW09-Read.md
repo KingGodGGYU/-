@@ -218,6 +218,6 @@ int main(void) {
     bfs(0,0); // 미로 탐색 시작
 	cout << dis[n - 1][m - 1]; // 도착 좌표까지의 거리 출력
 }
-![result](2178-3.jpg)
+![result](2178-3.png)
 
 ```
