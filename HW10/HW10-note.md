@@ -185,7 +185,7 @@ public:
 		adj_data[n2].push_back(make_pair(c1, dis)); // 방향성이 없으므로
 	}
 	void print_adj_airport() {
-		typedef list<pair<city, int>> A;
+		typedef list<pair<city, int>> A; // 원하는 타입으로 iterator 
 		int n_airport = adj_data.size();
 		A::iterator iter;
 		for (int i = 0; i < n_airport; i++) {
