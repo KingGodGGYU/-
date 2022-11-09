@@ -1,4 +1,16 @@
 ## 수업 내용 정리
+### 그래프 종류
+- 무방향 그래프
+- 방향 그래프
+- 가중치 그래프
+  - 간전에 비용이나 가중치가 할당된 그래프
+1. 인접 행렬
+2. BFS
+3. DFS
+4. KRUSKAL(크루스칼): 
+5. Digkstra
+
+
 ```C++
 #include <iostream>
 #include <queue>
