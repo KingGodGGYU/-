@@ -8,7 +8,7 @@ using namespace std;
 class CGraph {
 	int n_vertices;
 	bool* visited;
-	int paths; // 지나온 경로를 포인터로 설정
+	int* paths; // 지나온 경로를 포인터로 설정
 	int _idx;
 	vector <list<int>> adj;
 	vector<int> dist;
