@@ -128,3 +128,77 @@ int main() {
 	return 0;
 }
 ```
+
+### 공항 가중치 그래프
+```C++
+#include <iostream>
+#include <vector>
+#include <list>
+#include <queue>
+#include <utility>
+using namespace std;
+enum class city : int { SVO, LHR, ICN, SEA, DXB, SYD };
+ostream& operator<<(ostream& os, const city _c) {
+	switch (_c) {
+	case city::SVO:
+		os << "MOSCOW";
+		return os;
+	case city::LHR:
+		os << "LONDON";
+		return os;
+	case city::ICN:
+		os << "INCHEON";
+		return os;
+	case city::SEA:
+		os << "SEATLE";
+		return os;
+	case city::DXB:
+		os << "DUBAI";
+		return os;
+	case city::SYD:
+		os << "SYDNEY";
+		return os;
+	}
+}
+class CGraph {
+	vector<vector<int>> mat_data;
+	vector<list<pair<city, int>>> adj_data;
+public:
+	CGraph(int _n) {
+		// 원하는 열 만큼 생성해준 후 계속 도시 개수만큼 넣어줌
+		mat_data.reserve(_n); // 개수 확보
+		vector<int> v_row(_n);
+		fill(v_row.begin(), v_row.end(), -1);
+		for (int i = 0; i < _n; ++i) {
+			mat_data.push_back(v_row); // 층층이 6*6 매트릭스 생성
+		}
+		adj_data.resize(_n);
+	}
+	void addEdge(const city c1, const city c2, int dis) {
+		// adj matrix 구현
+		auto n1 = static_cast<int>(c1);
+		auto n2 = static_cast<int>(c2);
+		mat_data[n1][n2] = dis;
+		mat_data[n2][n1] = dis;
+		// adj list 구현
+		adj_data[n1].push_back(make_pair(c2, dis)); // 페어, 도시
+		adj_data[n2].push_back(make_pair(c1, dis)); // 방향성이 없으므로
+	}
+	void print_adj_airport() {
+		typedef list<pair<city, int>> A;
+		int n_airport = adj_data.size();
+		A::iterator iter;
+		for (int i = 0; i < n_airport; i++) {
+			cout << city(i) << "is connected to ";
+			list<pair<city, int>>::iterator iter;
+			for (iter = adj_data[i].begin(); iter != adj_data[i].end(); iter++) {
+				cout << (*iter).first << " (" (*iter);
+			}
+		}
+	}
+
+};
+int main() {
+	return 0;
+}
+```
