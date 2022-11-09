@@ -24,6 +24,7 @@ void DFS(int _s) {
 		list<int>::iterator iter; // 정점들은 리스트로 연결되어 있어 iterator를 이용해 탐색
 		for (iter = adj[_s].begin(); iter != adj[_s].end(); iter++) {
 			if (!visited[*iter]) {
+				visited[*iter] = true;
 				DFS(*iter); // 방문 하지 않은 노드의 경우 방문 처리
 			}
 		}
@@ -169,6 +170,7 @@ public:
 		list<int>::iterator iter;
 		for (iter = adj[_s].begin(); iter != adj[_s].end(); iter++) {
 			if (!visited[*iter]) {
+				visited[*iter] = true;
 				DFS(*iter);
 			}
 		}
