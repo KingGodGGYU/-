@@ -10,15 +10,15 @@ template <typename T>
 struct Edge {
 	unsigned src;
 	unsigned dst;
-	T weight;
+	T weight; // 
 };
 
 template <typename T>
 struct Label {
 	unsigned ID;
-	T distance;
+	T distance; //템플렛 타입 T
 	inline bool operator> (const Label<T>& l) const {
-		return this->distance > l.distance;
+		return this->distance > l.distance; //비교를 통해 최단거리가 계속 바뀜
 	}
 };
 
@@ -26,36 +26,36 @@ template <typename T>
 class Graph {
 public:
 	Graph(unsigned N) : V(N) {}
-	auto vertices() const { return V; }
-	auto& edges() const { return edge_list; }
+	auto vertices() const { return V; } //몇개씩 올지 모르므로 auto
+	auto& edges() const { return edge_list; } //복사해서 붙여넣는 것이 너무 번거로우므로 참조형으로 반환을 시켜줌
 	auto edges(unsigned v) const {
-		vector<Edge<T>> edges_from_v;
-		for (auto& e : edge_list) {
+		vector<Edge<T>> edges_from_v; //임시 선언한 엣지에다 넣어줌
+		for (auto& e : edge_list) { //엣지들 하나씩 보면서 엣지들 싹다 돎
 			if (e.src == v)
 				edges_from_v.emplace_back(e);
 		}
 		return edges_from_v;
 	}
-	void add_edge(Edge<T>&& e) {
-		if (e.src >= 1 && e.src <= V && e.dst >= 1 && e.dst <= V)
-			edge_list.emplace_back(e);
+	void add_edge(Edge<T>&& e) { //엣지 자체는 구조체, 템플렛으로 가지고 들어와서 참조표시를 두번 해줌
+		if (e.src >= 1 && e.src <= V && e.dst >= 1 && e.dst <= V) //시작점이 1보다 같거나 크고, 시작점과 도착점을 
+			edge_list.emplace_back(e); //edge list라는 간선 구조체 백터에다가 e 간선 구조체를 생성해서 하나씩 넣어줌
 		else
 			cerr << "errors" << endl;
 	}
 	template <typename U>
 	friend ostream& operator<< (ostream&, const Graph<U>& G);
 private:
-	unsigned V;
-	vector<Edge<T>> edge_list;
+	unsigned V;//다룰 정점의 개수
+	vector<Edge<T>> edge_list; //간선 구조체를 내가 원하는대로 지정할 수있는 간선 구조체를 벡터로 하나씩 쌓아가는 간선 list
 };
 
-template<typename U>
+template<typename U> //템플렛을 바꿔서 선언
 ostream& operator<< (ostream& os, const Graph<U>& G) {
-	for (unsigned i = 1; i < G.vertices(); ++i) {
+	for (unsigned i = 1; i < G.vertices(); ++i) { //편의상 1부터 시작
 		os << i << ":\t";
-		auto edges = G.edges(i);
+		auto edges = G.edges(i); //i 간선을 가져옴, 특정정점에서 이어지는 outogoing edge
 		for (auto& e : edges)
-			os << "{" << e.dst << ": " << e.weight << "}, ";
+			os << "{" << e.dst << ": " << e.weight << "}, "; //1:{2,2},{5,3} 편의상 출력 하는 부분
 		os << endl;
 	}
 	return os;
@@ -64,7 +64,7 @@ ostream& operator<< (ostream& os, const Graph<U>& G) {
 template <typename T>
 auto create_reference_graph() {
 	Graph<T> G(9);
-	map<unsigned, vector<pair<unsigned, T>>> edge_map;
+	map<unsigned, vector<pair<unsigned, T>>> edge_map; //정점은 unsigned type
 	edge_map[1] = { {2, 2}, {5, 3} };
 	edge_map[2] = { {1, 2}, {5, 5}, {4, 1} };
 	edge_map[3] = { {4, 2}, {7, 3} };
