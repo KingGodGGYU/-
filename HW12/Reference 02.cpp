@@ -75,40 +75,40 @@ auto create_reference_graph() {
 	edge_map[8] = { {4, 5}, {5, 3}, {6, 1} };
 	for (auto& i : edge_map)
 		for (auto& j : i.second)
-			G.add_edge(Edge<T>{i.first, j.first, j.second});
+			G.add_edge(Edge<T>{i.first, j.first, j.second}); //key값, j정점의 정점 이름, 연결되어있는 weight
 	return G;
 }
 
 template <typename T>
-auto CDIJKSTRA(const Graph<T>& G, unsigned src, unsigned dst) {
-	priority_queue<Label<T>, vector<Label<T>>, greater<Label<T>>> heap;
-	vector<T> distance(G.vertices(), numeric_limits<T>::max());
-	set<unsigned> visited;
+auto CDIJKSTRA(const Graph<T>& G, unsigned src, unsigned dst) { //1번에서 6번까지 가는 최단경로
+	priority_queue<Label<T>, vector<Label<T>>, greater<Label<T>>> heap; //Label: 특정 정점까지 도착하는 곳을 저장해주는 구조체
+	vector<T> distance(G.vertices(), numeric_limits<T>::max()); //Max값으로 선언, 최대값으로 들어감
+	set<unsigned> visited; //유니크한 키값을 갖는 애들을 저장하는 컨테이너, 방문했던 정점들을 저장
 	vector<unsigned> parent(G.vertices());
-	heap.emplace(Label<T>{src, 0});
+	heap.emplace(Label<T>{src, 0}); //최소 힙에 1번에서 6번까지 가는 최단경로 찾기
 	parent[src] = src;
 	while (!heap.empty()) {
-		auto current_vertex = heap.top();
-		heap.pop();
-		if (current_vertex.ID == dst) {
+		auto current_vertex = heap.top();//힙에 갈 수 있는 곳 중에 가장 빠른 길을 가게 됨
+		heap.pop(); //제거
+		if (current_vertex.ID == dst) { //최소값을 갖고 있는 현재 정점이 1이 됨, 1이 목적지이면 끝내기위한 안전장치
 			cout << "Arrived at the destination vertex " << current_vertex.ID << endl;
 			break;
 		}
-		if (visited.find(current_vertex.ID) == visited.end()) {
+		if (visited.find(current_vertex.ID) == visited.end()) { //현재 정점이 1이고 visited는 set, setd은 비어있기 때문에 방문 했는지를 찾아봄
 			cout << "Arrived at the vertex " << current_vertex.ID << endl;
-			for (auto& e : G.edges(current_vertex.ID)) {
-				auto neighbor = e.dst;
-				auto new_distance = current_vertex.distance + e.weight;
+			for (auto& e : G.edges(current_vertex.ID)) { //전부타 훑지 않고 2개만 보면 됨, 1에서 나가는 것만 뽑아오변 도착지는 2
+				auto neighbor = e.dst; //2번 정점이 neighbor가 됨, 그 다음은 5번이 될 터
+				auto new_distance = current_vertex.distance + e.weight; //현재 정점은 1이고 1까지의 거리는 0
 				if (new_distance < distance[neighbor]) {
-					heap.emplace(Label<T>{neighbor, new_distance});
+					heap.emplace(Label<T>{neighbor, new_distance}); //업데이트 시켜줌
 					parent[neighbor] = current_vertex.ID;
 					distance[neighbor] = new_distance;
 				}
 			}
-			visited.insert(current_vertex.ID);
+			visited.insert(current_vertex.ID); //정보들을 전부 알았으니 알고 있는 영역으로 넘겨줌
 		}
 	}
-	vector<unsigned> shortest_path;
+	vector<unsigned> shortest_path; //백트레킹 과정
 	auto current_vertex = dst;
 	while (current_vertex != src) {
 		shortest_path.push_back(current_vertex);
