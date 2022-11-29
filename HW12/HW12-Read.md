@@ -12,7 +12,7 @@
        인접하면 1 아니면 0을 저장한 행렬 1개, 인접한 곳의 가중치를 저장한 행렬 1개 즉, 총 2개의 인접행렬을 만들어 해결할 수 있다
 |Labeled Graph|Adjacency Matrix|
 |:---:|:---|
-|![graph](LabeledGraph.PNG)|![Matrix](AdjacencyMatrix.PNG) |
+|![graph](LabeledGraph.png =250x250)|![Matrix](AdjacencyMatrix.PNG =250x250)|
 ### 인접 리스트(Adjacency-list)
 - A[i] = i와 연결된 정점들을 링크드 리스트로 저장함(__연결된 정점이 저장되어 있지만 이들은 정점 i와 각 정점 간의 간선을 의미한다__)
 - 정점에 따라서 연결된 정점의 개수가 다르기 때문에 각기 다른 저장공간의 크기를 효율적으로 관리하기 위해 링크드 리스트를 사용.
