@@ -164,7 +164,7 @@ int main()
 ```
 ## 다익스트라 관련 문제
 ### 백준 1735번 : 최단경로
-![1735](Problem1735.PNG)
+![1735](1735.PNG)
 ```C++
 #include <iostream>
 #include <queue>
