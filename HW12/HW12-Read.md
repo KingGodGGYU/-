@@ -55,7 +55,7 @@ int main() {
     }
 }
 ```
-### 그래프의 구성
+### 그래프의  기본 구성
 ```C++
 class CGraph {
 	int n_vertices; // 정점의 개수
