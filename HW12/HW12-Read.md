@@ -73,6 +73,95 @@ class CGraph {
 3. 2번 과정에 의해서 갱신될 수 있는 정점들의 거리를 갱신시켜준다.
 4. 2 ~ 3번 과정을 반복한다.
 다익스트라 알고리즘을 고려할 때 제일 중요한 것이 __양의 가중치__ 만 적용가능하다. 그렇기 때문에 이미 방문했던 정점을 다시 방문해서 업데이트를 할 필요가 없는 것이다!
+### 다익스트라 예시 
+![DijkstraExample](DijkstraExample.PNG)
+|Circulation|V|노드2|노드3|노드4|노드5|
+|:---:|:---:|:---:|:---:|:---:|:---:|
+|시작 노드|1|1|INF|3|10|
+|2|1,2|1|INF|3|10|
+|3|1,2,4|1|6|3|9|
+|4|1,2,4,3|1|5|3|6|
+|5|1,2,4,3,5|1|5|3|6|
+
+```C++
+//STL을 사용해서 구현해보았다.
+#include <iostream>
+#include <map>
+#include <list>
+#include <utility>
+#include <queue>
+#include <functional>
+using namespace std;
+#define INF 0x3f3f3f3f // 코드에서 정의된 무한대값. 2배를 해도 오버플로우가 발생하지 않고 memset도 가능하다.
+
+typedef pair<int, int> IntegerPair;
+
+class Graph {
+	int V; // 그래프의 정점들 개수
+	list<pair<int, int>>* adj; // 정점과 가중치가 저장된 페어 리스트
+public:
+	Graph(int V) { // 그래프 생성자, 정점 개수를 Graph의 인자로 받아온다. 
+		this->V=V;
+		adj = new list<IntegerPair>[V]; // 정점들의 공간을 할당한다.
+	}
+	void addEdge(int u, int v, int w) { // 간선을 생성한다.
+		adj[u].push_back(make_pair(v, w)); // 간선과 가중치를 
+		adj[v].push_back(make_pair(u, w));
+		// 무방향이므로 정점 u에서 v, v에서 u 양방향에 간선을 추가한다.
+	}
+	void shortestPath(int src) { // 시작 노드을 인자로 받는다.
+		// 노드를 저장하기 위한 우선순위 큐를 만든다.
+		priority_queue<IntegerPair, vector<IntegerPair>, greater<IntegerPair>> pq;
+		vector <int> dist(V, INF); // 처음엔 모든 간선들이 무한대이므로 거리를 무한대로 둔다.
+		pq.push(make_pair(0, src)); // 큐에 시작 정점을 삽입한다.
+		dist[src] = 0; // 시작 노드은 항상 거리가 0이다.
+		while (!pq.empty()) {
+			// 큐가 비어있지 않으면, 우선순위 큐에서 가장 적은 가중치를 가진 정점을 선택한다.
+			// 정점의 가중치는 pair로 연결되어 있기 때문에 알 수 있다.
+			int u = pq.top().second;
+			pq.pop();
+			list<pair<int, int>>::iterator i; // i는 모든 연결 정점들을 가져오기 위한 순환 반복자이다.
+			for (i = adj[u].begin(); i != adj[u].end(); i++) {
+				// 정점 u의 인접한 정점들의 가중치와 정점을 가져온다.
+				int v = (*i).first;
+				int weight = (*i).second;
+				if (dist[v] > dist[u] + weight) { // v에서 u까지의 최단 거리가 새로 생긴다면
+					// v 까지의 거리를 업데이트 해준다.
+					dist[v] = dist[u] + weight;
+					pq.push(make_pair(dist[v], v));
+				}
+			}
+		}
+		// 과정을 프린트하는 코드
+		cout << "시작 노드로부터의 정점과  거리 \n ";
+		for (int i = 0; i < V; i++) {
+			cout << i << "\t\t" << dist[i];
+			cout << endl;
+		}
+	}
+};
+int main()
+{
+	int V = 9; // 정점의 개수는 9개라고 가정한다. 
+	Graph g(V); // 객체로 그래프를 불러온다.  
+	g.addEdge(0, 1, 4); // 간선을 추가할 때 이웃하는 정점과 가중치의 정보를 시작 노드에 추가한다.
+	g.addEdge(0, 7, 8);
+	g.addEdge(1, 2, 8);
+	g.addEdge(1, 7, 11);
+	g.addEdge(2, 3, 7);
+	g.addEdge(2, 8, 2);
+	g.addEdge(2, 5, 4);
+	g.addEdge(3, 4, 9);
+	g.addEdge(3, 5, 14);
+	g.addEdge(4, 5, 10);
+	g.addEdge(5, 6, 2);
+	g.addEdge(6, 7, 1);
+	g.addEdge(6, 8, 6);
+	g.addEdge(7, 8, 7);
+	g.shortestPath(0); // 최소 거리를 찾기 위해 함수를 불러온다. 시작 정점은 0이다.
+	return 0;  
+}
+```
 
 ## BFS 관련 문제
 ### 백준 2178번 : 미로 탐색
