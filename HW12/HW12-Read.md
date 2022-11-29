@@ -262,4 +262,4 @@ int main(void) {
 	cout << dis[n - 1][m - 1]; // 도착 좌표까지의 거리 출력
 }
 ```
-![result](https://github.com/kb081544/Data-Structure-2022/blob/main/HW09/2178-1.PNG)
+![result](https://github.com/kb081544/Data-Structure-2022/blob/main/HW09/2178-3.PNG)
