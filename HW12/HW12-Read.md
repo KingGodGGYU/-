@@ -1,8 +1,8 @@
 ## 그래프의 표현 방법 2가지
 ## 인접 행렬과 인접 리스트
-![Example1](Example1.png)
+![Example1](Example1.png)   
 a: 무방향 그래프, b: 인접 리스트, c: 인접 행렬
-![Example1](Example2.png)
+![Example1](Example2.png)   
 a: 방향 그래프, b: 인접 리스트, c: 인접 행렬
 
 ### 인접 행렬(Adjacency-matrix)
@@ -19,14 +19,14 @@ a: 방향 그래프, b: 인접 리스트, c: 인접 행렬
 ```C++
 #include <iostream>
 using namespace std;
-int vertices; // 정점 변수
-int adjacency; // 간선 변수
-int adj[10][10]; //10x10 행렬을 임의로 만들어줌
+int vertices; // 정점 개수
+int adjacency; // 간선 개수
+int adj[10][10]; //간선을 10x10 행렬
 int main() {
-    cin >> n >> m;
-    for (int i=0; i<m; i++) {
+    cin >> vertices >> adjacency;
+    for (int i=0; i < adjacency; i++) {
       int a, b;
-      cin >> a >> b;
+      cin >> a >> b;  
       adj[a][b] = 1; // 무방향 그래프 이므로 
       adj[b][a] = 1; // 양방향의 간선이 1의 가중치를 가진다
     }
@@ -35,10 +35,26 @@ int main() {
 ### 인접 리스트(Adjacency-list)
 - A[i] = i와 연결된 정점들을 링크드 리스트로 저장함(__연결된 정점이 저장되어 있지만 이들은 정점 i와 각 정점 간의 간선을 의미한다__)
 - 정점에 따라서 연결된 정점의 개수가 다르기 때문에 각기 다른 저장공간의 크기를 효율적으로 관리하기 위해 링크드 리스트를 사용.
-- 링크드 리스트를 사용하는 이유는 단지 공간효율때문에 그런 것이므로 Vector로 대체하여 인접리스트를 구현할 수 있다.
-- 두 노드간의 간선이 여러개인 경우 인접행렬 보다 인접리스트를 사용하는 것이 좋은데, 그 복잡한 관계는 인접행렬 1개 만으로 나타낼 수 없기 때문이다. 인접리스트는 이것이 가능하다.
+- linked list도 사용가능하지만 주로 __STL Vector__ 가 많이 쓰인다.
+- 두 노드간의 간선이 여러개인 경우 인접행렬 보다 인접리스트를 사용하는 것이 좋은데, 그 복잡한 관계는 인접행렬 1개 만으로 나타낼 수 없으나 인접리스트는 이것이 가능하기 때문이다.
 - 인접행렬의 경우 공간이 V^2 만큼 필요한데, 인접리스트는 모든 간선을 1번씩 저장하기 때문에 E개 만큼 필요하다.
-- - 가중치가 있는 경우 __pair<int, int>__ 형을 가지는 2차원 벡터로 해결할 수 있다.
+- 가중치가 있는 경우 __pair<int, int>__ 형을 가지는 2차원 벡터로 해결할 수 있다.
+```C++
+#include <iostream>
+using namespace std;
+int vertices; // 정점 개수
+int adjacency; // 간선 개수
+vector<int> adj[10];
+int main() {
+    cin >> vertices >> adjacency;
+    for (int i=0; i < vertices; i++) {
+      int a, b;
+      cin >> a >> b;
+      adj[a].push_back(b);
+      adj[b].push_back(a);
+    }
+}
+```
 ### 그래프의 구성
 ```C++
 class CGraph {
@@ -49,111 +65,15 @@ class CGraph {
 	vector <list<int>> adj; // 정점의 간선을 리스트 벡터로 표현
 	vector<int> dist; // 간선의 길이를 벡터로 표현
  ```
- ```
-public:
-	CGraph(int _n) { // 정점의 개수만 필요하기 때문에 
-		this->n_vertices = _n; 
-		visited = new bool[_n];
-		for (int i = 0; i < _n; i++) {
-			visited[i] = false;
-		}
-		adj.resize(_n); //초기화
-		adj.resize(_n);
-	}
-	~CGraph() {
-		delete visited;
-	}
-	void addUndirectedEdge(int _s, int _d) {
-		adj[_s].push_back(_d);
-		adj[_d].push_back(_s);
-		//방향 없음
-	}
-	void DFS(int _s, int _d, int _idx) {
-		visited[_s] = true;
-		paths[_idx]=_s;
-		cout << _s << " ";
-		list<int>::iterator iter;
-		for (iter = adj[_s].begin(); iter != adj[_s].end(); iter++) {
-			if (_s == _d) {
-				for (int i = 0; i < _idx; +i) {
-					cout << paths[i] << ' ';
-				}
-				cout << endl;
-			}
-			else {
-				for (iter = adj[_s].begin(); iter != adj[_s].end(); iter++) {
-					if (!visited[*iter]) {
-						DFS(*iter, _d, _idx);
-					}
-				}
-			}
-			
-	}
 
-};
-/*  path 저장 벡터나 포인터로 저장
- 도착점이아니었을때  DFS recursion. 도착점일땐 출력
- if문 도착점인지 아닌지
- if(도착점){
-	cout<<도착점;
- }
- 출력하는 위치까지 왔다갔다 해주는 index 필요
- int idx;
+## 다익스트라 알고리즘과 코드
+다익스트라 알고리즘은 최단 경로 탐색 기능이 추가된 그래프이다. 시작노드를 임의로 정해서 최소 가중치가 선택된 정점을 선택해 간선을 업데이트하며 이것이 계속 반복되는 형식으로 진행된다.
+1. 시작 노드와 직접적으로 연결된 모든 정점들의 거리를 비교해서 업데이트 시켜주고, 시작 노드를 방문한 노드로 체크한다.
+2. 방문한 정점들과 연결되어 있는 정점들 중, 비용이 가장 적게 드는 정점을 선택하고, 해당 정점을 방문한 정점으로 선택해준다.
+3. 2번 과정에 의해서 갱신될 수 있는 정점들의 거리를 갱신시켜준다.
+4. 2 ~ 3번 과정을 반복한다.
+다익스트라 알고리즘을 고려할 때 제일 중요한 것이 __양의 가중치__ 만 적용가능하다. 그렇기 때문에 이미 방문했던 정점을 다시 방문해서 업데이트를 할 필요가 없는 것이다!
 
- 0: visited[0];  0은 방문했다고 표시
- 0
- path 내에 현재 위치는 idx=0;
- 0은 도착점? no. 근천의 친구를 보게됨
- if(!도착점){
-	adj[0];
- }
- 1: visited[1];
- if(!도착점){
-	adj[1]
-	idx=1
- }
- 3: visited[3];
-	if(도착점){
-		for (path) {
-		cout<< path[i];
-		}
-	}
- idx=2
- 출력: 0 1 3
- path에 저장되어있는 0 1 3 을 지워주어야 함, idx값을 이용
- idx-=1;
- path에는 0 1 만 있는 것 처럼 보임(2번째이므로)
- idx-=1; 한번 더함
- 2: visited[2];
-
- 0 만 있는 것 처럼 보임, 0과 연결된 곳이 존재 -> idx+=1(2)
- 2를 path에 저장
- 0 2
- }
-
- visited[s] = true;
- idx++;
- vector<int> paths;
- paths[idx]=s;
- if(시작점 s== 도착점 d){
-	for(i=0; i<idx; i++){
-		cout<<paths[i];
-	}
-if(s!=d){
-for(i in adj[s]){
-	DFS(s,d);
-	idx--;
-	visited[s]=false;
-	}
-}
-*/
-int main() {
-	CGraph OGraph(4);
-
-
-	return 0;
-}
-```
 ## BFS 관련 문제
 ### 백준 2178번 : 미로 탐색
 
