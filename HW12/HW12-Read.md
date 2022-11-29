@@ -135,8 +135,8 @@ int main() {
 ## BFS 관련 문제
 ### 백준 2178번 : 미로 탐색
 
-![2178-1](Data-Structure-2022/HW09/2178-1.PNG)
-![2178-2](Data-Structure-2022/HW09/2178-2.PNG)
+![2178-1](https://github.com/kb081544/Data-Structure-2022/blob/main/HW09/2178-1.PNG)
+![2178-2](https://github.com/kb081544/Data-Structure-2022/blob/main/HW09/2178-2.PNG)
 ```C++
 #include <iostream>
 #include <queue>
