@@ -1,9 +1,9 @@
 ## 그래프의 표현 방법 2가지
 ## 인접 행렬과 인접 리스트
 ![Example1](Example1.png)   
-a: 무방향 그래프, b: 인접 리스트, c: 인접 행렬
-![Example1](Example2.png)   
-a: 방향 그래프, b: 인접 리스트, c: 인접 행렬
+a: 무방향 그래프, b: 인접 리스트, c: 인접 행렬   
+![Example1](Example2.png)     
+a: 방향 그래프, b: 인접 리스트, c: 인접 행렬   
 
 ### 인접 행렬(Adjacency-matrix)
 - 정점의 개수를 V개라고 했을 때, V x V 크기의 이차원 배열(행렬모양)에 저장한다.
