@@ -135,8 +135,8 @@ int main() {
 ## BFS 관련 문제
 ### 백준 2178번 : 미로 탐색
 
-![2178-1](HW09/2178-1.PNG)
-![2178-2](HW09/2178-2.PNG)
+![2178-1](Data-Structure-2022/HW09/2178-1.PNG)
+![2178-2](Data-Structure-2022/HW09/2178-2.PNG)
 ```C++
 #include <iostream>
 #include <queue>
@@ -176,4 +176,4 @@ int main(void) {
 	cout << dis[n - 1][m - 1]; // 도착 좌표까지의 거리 출력
 }
 ```
-![result](HW09/2178-3.PNG)
+![result](Data-Structure-2022/HW09/2178-3.PNG)
