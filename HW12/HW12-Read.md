@@ -78,8 +78,8 @@ class CGraph {
 |Circulation|V|노드2|노드3|노드4|노드5|
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |시작 노드|1|1|INF|3|10|
-|2|1,2|1|INF|3|10|
-|3|1,2,4|1|6|3|9|
+|2|1,2|1|6|3|10|
+|3|1,2,4|1|5|3|9|
 |4|1,2,4,3|1|5|3|6|
 |5|1,2,4,3,5|1|5|3|6|
 
@@ -109,7 +109,7 @@ public:
 		adj[v].push_back(make_pair(u, w));
 		// 무방향이므로 정점 u에서 v, v에서 u 양방향에 간선을 추가한다.
 	}
-	void shortestPath(int src) { // 시작 노드을 인자로 받는다.
+	void shortestPath(int src) { // 다익스트라 알고리즘의 코드. 시작 노드을 인자로 받는다.
 		// 노드를 저장하기 위한 우선순위 큐를 만든다.
 		priority_queue<IntegerPair, vector<IntegerPair>, greater<IntegerPair>> pq;
 		vector <int> dist(V, INF); // 처음엔 모든 간선들이 무한대이므로 거리를 무한대로 둔다.
@@ -162,7 +162,62 @@ int main()
 	return 0;  
 }
 ```
+## 다익스트라 관련 문제
+### 백준 1735번 : 최단경로
+![1735](Problem1735.PNG)
+```C++
+#include <iostream>
+#include <queue>
+#include <list>
+#include <vector>
+using namespace std;
+#define INF 0x3f3f3f3f
 
+vector<pair<int, int> > adj[2000];
+priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > >pq;
+int dist[2000]; // 거리의 배열.
+int main() {
+	int V, E, K, u, v, w;
+	cin >> V >> E;
+	cin >> K; 
+
+	// 정점의 개수 V, 간선의 개수 E, 시작 정점의 번호 K 를 입력받는다. 
+	for (int i = 0; i < E; i++) {
+		cin >> u >> v >> w;
+		adj[u].push_back(make_pair(v, w));
+		// u에서 v로 가는 가중치 w인 간선을 입력받아 간선을 추가한다.
+	}
+	for (int i = 1; i <= V; i++) {
+		dist[i] = INF;
+	}
+	dist[K] = 0; // 시작 노드와 시작 정점은 동일하므로 거리가 0.
+	pq.push(make_pair(0, K)); // 우선순위큐에 시작 정점을 추가한다. 
+
+	while (!pq.empty()) { 
+		// 큐가 비어있지 않을 때, 가장 적은 가중치가 연결되어 있는 것을 선택.
+		int x = pq.top().first;
+		int U = pq.top().second;
+		pq.pop();
+		for (int i = 0; i < adj[U].size(); i++) {
+			int V = adj[U][i].first; 
+			int W = adj[U][i].second;
+			// 최소 거리가 새로 계산되면 업데이트 해준다.
+			if (x + W < dist[V]) {
+				dist[V] = x + W;
+				pq.push(make_pair(x + W, V));
+			}
+		}
+	}
+	for (int i = 1; i <= V; i++)
+		if (dist[i] == INF)
+			cout << "INF" << endl;
+		else
+			cout << dist[i] << endl;
+
+	return 0;
+}
+```
+![Result](Result1735.PNG)
 ## BFS 관련 문제
 ### 백준 2178번 : 미로 탐색
 
