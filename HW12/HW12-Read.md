@@ -132,4 +132,48 @@ int main() {
 	return 0;
 }
 ```
+## BFS 관련 문제
+### 백준 2178번 : 미로 탐색
 
+![2178-1](HW09/2178-1.PNG)
+![2178-2](HW09/2178-2.PNG)
+```C++
+#include <iostream>
+#include <queue>
+using namespace std;
+ 
+string map[100]; 
+int dis[100][100]; // 방문 기록용
+int dx[4] = {1, -1, 0, 0}; // 상하좌우 x축 방향
+int dy[4] = {0, 0, 1, -1}; // 상하좌우 y축 방향
+int n,m; // 미로 크기 변수
+queue<pair<int, int> > q; // 탐색 좌표 저장용 큐
+
+void bfs(int x,int y) {
+    q.push(make_pair(x, y)); // 큐에 삽입
+	dis[x][y] = 1; // 시작 좌표 방문
+	while (!q.empty()) {
+		x = q.front().first; //큐의 front 좌표를 현재 좌표로 지정
+		y = q.front().second;
+		q.pop();
+		for (int i = 0; i < 4; i++) {
+			// 현재 좌표와 인접한 좌표
+			int nx = x + dx[i];
+			int ny = y + dy[i];
+			if ((0 <= nx && nx < n) && (0 <= ny && ny < m) && dis[nx][ny] == 0 && map[nx][ny] == '1') { 
+			// 인접 좌표가 존재하는지, 방문 여부와 이동 여부 확인
+				q.push(make_pair(nx, ny)); // 인접 좌표 큐에 삽입
+				dis[nx][ny] = dis[x][y] + 1; // 인접 좌표 이동거리 저장
+			}
+		}
+	}
+}
+int main(void) {
+    cin >> n>> m; // 미로 크기
+    for (int i = 0; i < n; i++) // 행 입력
+		cin >> map[i];
+    bfs(0,0); // 미로 탐색 시작
+	cout << dis[n - 1][m - 1]; // 도착 좌표까지의 거리 출력
+}
+```
+![result](HW09/2178-3.PNG)
