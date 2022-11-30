@@ -48,4 +48,8 @@
 - - negative cycle exists
 - - Report Undifined
 
+풀고자 하는 문제의 효과
+1. 유형효과: 계산 가능한 값을 근거로 한 효과(ex: 그동안의 손실 얼마, 피해 얼마, 개발비용 얼마 등)
+3. 무형효과: 계산 불가능한 효과(ex: 대안 마련, 국제적 위상 강화, 사업 확장 기대)
+
 [알고리즘 공부 책 링크](https://sd.blackball.lv/library/Introduction_to_Algorithms_Third_Edition_(2009).pdf)
