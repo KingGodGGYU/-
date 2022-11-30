@@ -33,4 +33,5 @@
  > > 2. select edge -> Relax
  > > > Dijkstra(greedy): 기존에 알고있던 거리(d[v])>새로 알게 된 거리(d[u]+w(u, v)); d[v]<-d[u]+w(u,v);
  > > > Bellman-Ford: 정점 개수 V에 따라  for 문을 돌림 -> 모든 간선들에 대해 relax 시켜줌. Negatice Cycle 확인 필요.
+
 [알고리즘 공부 책 링크](https://sd.blackball.lv/library/Introduction_to_Algorithms_Third_Edition_(2009).pdf)
