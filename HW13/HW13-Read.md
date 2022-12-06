@@ -14,3 +14,77 @@
 3. 아래 과정을 (정점의 개수)-1 번 반복한다. 
     1. 모든 간선 E개를 하나씩 확인한다.
     2. 각 간선을 거쳐 다른 노드로 가는 비용을 계산하여 최단 거리 테이블을 갱신한다.   
+### LeetCode Solution
+#### 벨만-포트 알고리즘 사용
+```C++
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        vector<pair<int,int>> adj[n+1];
+        for(int i=0;i<times.size();i++)
+                adj[times[i][0]].push_back({times[i][1],times[i][2]});
+        vector<int> dist(n+1,INT_MAX);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        pq.push({0,k});
+        dist[k]=0;
+        while(!pq.empty())
+        {
+            pair<int,int> t=pq.top();
+            pq.pop();
+            for(pair<int,int> it:adj[t.second])
+            {
+                if(dist[it.first]>t.first+it.second)
+                {
+                    dist[it.first]=t.first+it.second;
+                    pq.push({dist[it.first],it.first});
+                }
+            }
+        }
+        int res=0;
+        for(int i=1;i<=n;i++)
+        {
+            if(dist[i]==INT_MAX)
+                return -1;
+            res=max(res,dist[i]);
+        }
+		return res;
+	}
+};
+```
+
+#### 다익스트라 알고리즘 사용
+```C++
+class Solution {
+public:
+ int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+     vector<int> dist(n+1,INT_MAX);
+     dist[k]=0;
+     
+     for(int i=0;i<n-1;i++)
+     {
+         bool flag=false;
+         for(auto node:times)
+         {
+             int src=node[0];
+             int des=node[1];
+             int time=node[2];
+             if(dist[src]!=INT_MAX&&dist[des]>dist[src]+time)
+             {
+                 dist[des]=dist[src]+time;
+                 flag=true;
+             }
+         }
+         if(flag==false)
+             break;
+     }
+     int res=0;
+     for(int i=1;i<=n;i++)
+     {
+         if(dist[i]==INT_MAX)
+             return -1;
+         res=max(res,dist[i]);
+     }
+     return res;
+ }
+};
+```
