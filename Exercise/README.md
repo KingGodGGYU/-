@@ -164,6 +164,62 @@ int solution(int n, vector<vector<int>> edge) {
     }
    
 ```
+#### Dijkstra 배달
+```C++
+#include <iostream>
+#include <fstream>
+#include <queue>
+#include <list> 
+#include <vector>
+#include <utility>
+#include <set>
+#include <map>
+#include <limits>
+using namespace std;
+vector<pair<int,int>>V[50]; // 정점V에 따른 도착,weight
+vector<int> Dist;
+int Min(int A, int B){
+    if(A<B)
+        return A;
+    return B;
+}
+void Dijkstra(int N){
+    priority_queue<pair<int,int>> pq; // woeght, 현재 위치
+    pq.push(make_pair(0,1));
+    Dist[1]=0;
+    while(!pq.empty()){
+        int cost=-pq.top().first;
+        int current=pq.top().second;
+        pq.pop();
+        for(int i=0; i<V[current].size();i++){
+            int Next=V[current][i].first;
+            int NextCost=V[current][i].second;
+            if(Dist[Next]>cost+NextCost){
+                Dist[Next]=cost+NextCost;
+                pq.push(make_pair(-Dist[Next],Next));
+            }
+        }
+    }
+}
+
+int solution(int N, vector<vector<int> > road, int K) {
+    int answer = 0;
+    Dist.resize(N+1, 2e9);
+    for(int i=0; i<road.size(); i++){
+        int src=road[i][0];
+        int dst=road[i][1];
+        int Dist=road[i][2];
+        V[src].push_back(make_pair(dst, Dist));
+        V[dst].push_back(make_pair(src, Dist));
+    }
+    Dijkstra(N);
+    for(int i=1; i<=N; i++){
+        if(Dist[i]<=K)
+            answer++;
+    }
+    return answer;
+}
+```
 #### 더 맵게
 ```C++
 #include <iostream>
