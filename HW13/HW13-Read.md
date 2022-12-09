@@ -88,3 +88,63 @@ public:
  }
 };
 ```
+
+### 백준 1916
+#### 다익스트라 사용
+```C++
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+#define INF 999
+int weight[1000];
+vector<pair<int, int>>vec[1000];
+int dist[1000]; // 거리 즉, weight
+void dijkstra(int start) {
+	dist[start] = 0; // 처음 위치의 거리는 0
+	priority_queue<pair<int, int>> pq; // weight, 시작점
+	pq.push({ dist[start], start }); // weight과 시작점을 pair로 받는다
+	while (!pq.empty()) {
+		int current = pq.top().second;  // 현재 위치 정점 번호
+		int distance = pq.top().first; // start 에서 현재까지의 weight
+		pq.pop();
+		if (dist[current] < distance) // 저장되어 있는 것보다 업데이트 된 거리가 크면 패스
+			continue;
+		for (int i = 0; i < vec[current].size(); i++) { // 현재 노드의 인접 노드들을 확인
+			int next = vec[current][i].first; // 인접한 정점들을 확인
+			int nextDistance = distance + vec[current][i].second; 
+			// start부터 현재 정점까지의 최소거리와
+			// 현재를 지나 다음 next 정점까지의 distance
+			if (nextDistance < dist[next]) { // 현재 정점을 지나가는 것이 더 가까우면
+				dist[next] = nextDistance; // 업데이트 후 pq에 push
+				pq.push({nextDistance, next}); 
+			}
+		}
+	}
+}
+
+int main() {
+	int city;
+	int bus;
+
+	int city_src;
+	int city_dst;
+
+	int _src, _dst, _weight;
+	cin >> city; // 정점 개수
+	cin >> bus; // 간선 개수
+	for (int i = 0; i < bus; i++) {
+		dist[i] = INF;
+	}
+	for (int i = 0; i < bus; i++) {
+		cin >> _src >> _dst >> _weight;
+		vec[_src].push_back({ _dst, _weight });
+	}
+	cin >> city_src;
+	cin >> city_dst;
+	dijkstra(city_src);
+	cout << dist[city_dst];
+	return 0;
+}
+```
