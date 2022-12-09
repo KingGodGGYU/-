@@ -1,3 +1,41 @@
+#### dfs
+```C++
+void dfs(int x)
+{
+	visited[x] = true;
+	cout << x << " ";
+	for (int i = 0; i < graph[x].size(); i++) // 인접한 노드 사이즈만큼 탐색
+	{
+		int y = graph[x][i];
+		if (!visited[y]) // 방문하지 않았으면 즉 visited가 False일 때 not을 해주면 True가 되므로 아래 dfs 실행
+            dfs(y); // 재귀적으로 방문
+	}
+}
+```
+#### bfs
+```C++
+void bfs(int start) {
+    queue<int> q;
+    q.push(start); // 첫 노드를 queue에 삽입
+    visited[start] = true; // 첫 노드를 방문 처리
+
+    // 큐가 빌 때까지 반복
+    while (!q.empty()) {
+        // 큐에서 하나의 원소를 뽑아 출력
+        int x = q.front();
+        q.pop();
+        cout << x << ' ';
+        // 해당 원소와 연결된, 아직 방문하지 않은 원소들을 큐에 삽입
+        for (int i = 0; i < graph[x].size(); i++) {
+            int y = graph[x][i];
+            if (!visited[y]) {
+                q.push(y);
+                visited[y] = true;
+            }
+        }
+    }
+}
+```
 #### 벨만 포드
 ```C++
 void Bellman_Ford()
