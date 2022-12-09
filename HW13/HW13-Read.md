@@ -90,7 +90,7 @@ public:
 ```
 
 ### 백준 1916
-#### 다익스트라 사용
+#### 다익스트라, 벨만포드 사용
 ```C++
 #include <iostream>
 #include <vector>
@@ -101,9 +101,12 @@ using namespace std;
 int weight[1000];
 vector<pair<int, int>>vec[1000];
 int dist[1000]; // 거리 즉, weight
+int city;
+int bus;
+
 void dijkstra(int start) {
 	dist[start] = 0; // 처음 위치의 거리는 0
-	priority_queue<pair<int, int>> pq; // weight, 시작점
+	priority_queue<pair<int, int>> pq; // weight, 현재 위치를 int로 받는다
 	pq.push({ dist[start], start }); // weight과 시작점을 pair로 받는다
 	while (!pq.empty()) {
 		int current = pq.top().second;  // 현재 위치 정점 번호
@@ -123,10 +126,34 @@ void dijkstra(int start) {
 		}
 	}
 }
+int bellmanFord(int start) {
+	fill_n(dist, 1000, INF); // 시작점을 제외한 모든 정점까지의 거리를 INF로
+	dist[start] = 0; // 시작 정점은 0
+	bool visited; // 방문 여부는 bool 형
+	for (int i = 0; i < bus; i++) {
+		visited = false;
+		for (int j = 1; j <= bus; j++) {
+			for (int k = 0; k < vec[j].size(); k++) {
+				int current = vec[j][k].first;
+				int distance = vec[j][k].second;
+				if(dist[current] > dist[j] + distance) { // 원래 있던 정보가 업데이트 된 정보보다 크면
+					dist[current] = dist[j] + distance; // 업데이트된 정보를 원래 정보로 업데이트
+					visited = true; // 방문 여부를 true
+				}
+			}
+		}
+		if (!visited)
+				break; // 모든 간선에 대해 방문하지 못한 경우 break
+	}
+	if (visited) {
+			cout << "음수 사이클 존재" << endl;
+			return 1;
+	}
+	return 0;
+};
 
 int main() {
-	int city;
-	int bus;
+
 
 	int city_src;
 	int city_dst;
@@ -143,8 +170,13 @@ int main() {
 	}
 	cin >> city_src;
 	cin >> city_dst;
+	
+	if(!bellmanFord(city_src))
+		cout<<dist[city_dst];
+	/*
 	dijkstra(city_src);
 	cout << dist[city_dst];
+	*/
 	return 0;
 }
 ```
