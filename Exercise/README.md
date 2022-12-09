@@ -1,4 +1,70 @@
 ### 프로그래머스 
+#### 정렬 H-Index
+```C++
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int solution(vector<int> citations) {
+    int answer = 0;
+    // 일단 정렬
+    sort(citations.begin(), citations.end());
+    for(int i=0; i<citations.size(); i++){
+        int H_Index=citations.size()-i;
+        if(citations[i]>=H_Index)
+            return H_Index;
+    }
+    return answer;
+}
+```
+#### 정렬 K번째 수
+```C++
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+vector<int> solution(vector<int> array, vector<vector<int>> commands) {
+    vector<int> answer;
+    for(int i=0; i<commands.size(); i++){
+        vector<int>temp;
+        for(int j=commands[i][0]-1; j<commands[i][1]; j++){
+          temp.push_back({array[j]});  
+        }
+        sort(temp.begin(), temp.end());
+        answer.push_back(temp.at(commands[i][2]-1));
+    }
+
+    return answer;
+}
+```
+#### 정렬 가장 큰 수
+```C++
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+bool cmp(string a, string b){
+    return a+b>b+a;
+}
+string solution(vector<int> numbers) {
+    vector<string>temp; // 임시 벡터 선언
+    for(int i=0; i<numbers.size();i++){
+        temp.push_back(to_string(numbers[i]));
+    }
+    string answer = "";
+    sort(temp.begin(),temp.end(),cmp);
+    if(temp[0].compare("0")==0)
+        return "0";
+    for(int i=0; i<temp.size(); i++){
+        answer+=temp[i];
+    }
+    return answer;
+}
+```
 #### bfs 가장 먼 노드
 ```C++
 #include <string>
@@ -78,28 +144,7 @@ int solution(vector<int> scoville, int K) {
     return answer;
 }
 ```
-#### K번째 수
-```C++
-#include <string>
-#include <vector>
-#include <iostream>
-#include <algorithm>
-using namespace std;
 
-vector<int> solution(vector<int> array, vector<vector<int>> commands) {
-    vector<int> answer;
-    for(int i=0; i<commands.size(); i++){
-        vector<int>temp;
-        for(int j=commands[i][0]-1; j<commands[i][1]; j++){
-          temp.push_back({array[j]});  
-        }
-        sort(temp.begin(), temp.end());
-        answer.push_back(temp.at(commands[i][2]-1));
-    }
-
-    return answer;
-}
-```
 ### 백준
 #### 1238
 ```C++
