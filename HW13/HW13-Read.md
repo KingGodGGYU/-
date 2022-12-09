@@ -20,23 +20,25 @@
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        vector<pair<int,int>> adj[n+1];
-        for(int i=0;i<times.size();i++)
-                adj[times[i][0]].push_back({times[i][1],times[i][2]});
-        vector<int> dist(n+1,INT_MAX);
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
-        pq.push({0,k});
-        dist[k]=0;
+        vector<pair<int,int>> adj[n+1]; // 노드가 1부터 n까지
+        for(int i=0;i<times.size();i++) // 벨만 포드는 노드를 전부 확인하기 때문에 times의 size만큼 돈다. 모든 노드의 정보를 아는 것이 벨만 포트이기 때문이다. 
+                adj[times[i][0]].push_back({times[i][1],times[i][2]}); 
+		// times[i][1]이 v 즉 종착노드, times[i][2]가 w즉 거리, times[i][0]이 시작 노드이다.
+		// adj[시작노드]에 종착 노드와 거리를 push_back 해준다.
+        vector<int> dist(n+1,INT_MAX); // 거리 벡터를 만들어주어 모든 거리를 INT_MAX로 둔다.
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq; // 우선순위큐를 사용한다.
+        pq.push({0,k}); // k까지의 거리가 0인 pair를 priority_queue에 삽입
+        dist[k]=0; // 출발지 k의 거리이므로 0
         while(!pq.empty())
         {
-            pair<int,int> t=pq.top();
+            pair<int,int> t=pq.top(); // 거리와 노드의 정보를 pair로 받아 삽입
             pq.pop();
-            for(pair<int,int> it:adj[t.second])
+            for(pair<int,int> it:adj[t.second]) // adj 벡터가 pair로 되어 있으니 끝까지 받아온다
             {
-                if(dist[it.first]>t.first+it.second)
+                if(dist[it.first]>t.first+it.second) // it의 first, 즉 출발 노드의 거리 정보가 새로 알게된 거리 정보+원래의 거리 정보의 합 보다 크면(알게된 정보가 작으면)
                 {
-                    dist[it.first]=t.first+it.second;
-                    pq.push({dist[it.first],it.first});
+                    dist[it.first]=t.first+it.second; // 거리를 업데이트 후 
+                    pq.push({dist[it.first],it.first}); // pq에 push 해준다.
                 }
             }
         }
@@ -44,8 +46,8 @@ public:
         for(int i=1;i<=n;i++)
         {
             if(dist[i]==INT_MAX)
-                return -1;
-            res=max(res,dist[i]);
+                return -1; // 음수 간선이 있으면 알고리즘을 종료
+            res=max(res,dist[i]); // 순환을 계속 하여 음수 간선의 사이클이 있는지를 확인한다. 
         }
 		return res;
 	}
@@ -57,24 +59,24 @@ public:
 class Solution {
 public:
  int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-     vector<int> dist(n+1,INT_MAX);
-     dist[k]=0;
+     vector<int> dist(n+1,INT_MAX); // 거리를 벡터로 담아 모든 거리를 INT_MAX로 둔다
+     dist[k]=0; // 시작점 k는 k부터의 거리이므로 0
      
      for(int i=0;i<n-1;i++)
      {
-         bool flag=false;
+         bool flag=false; // 방문했는지의 여부
          for(auto node:times)
          {
-             int src=node[0];
-             int des=node[1];
-             int time=node[2];
+             int src=node[0];  // 시작 노드
+             int des=node[1]; // 도착 노드
+             int time=node[2]; // 걸리는 시간
              if(dist[src]!=INT_MAX&&dist[des]>dist[src]+time)
              {
-                 dist[des]=dist[src]+time;
-                 flag=true;
+                 dist[des]=dist[src]+time; // 새로 발견한 거리를 업데이트 해준 후
+                 flag=true; // 노드를 방문했다고 표시해준다.
              }
          }
-         if(flag==false)
+         if(flag==false) // 방문하지 않은 노드를 발견하면 for문을 빠져나온다. 
              break;
      }
      int res=0;
