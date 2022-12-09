@@ -65,6 +65,58 @@ string solution(vector<int> numbers) {
     return answer;
 }
 ```
+#### dfs 네트워크
+```C++
+#include <string>
+#include <vector>
+// dfs
+using namespace std;
+int visited[200];
+void dfs(int current_computer, int n, vector<vector<int>> computers){
+    visited[current_computer]=1;
+    for(int i=0;i<n; i++){
+        if(visited[i]==0&&computers[current_computer][i]==1){
+            // 다른 컴퓨터와 연결, 그 컴퓨터가 아직 탐색을 안했으면 탐색함
+            dfs(i,n,computers);
+        }
+    }
+}
+int solution(int n, vector<vector<int>> computers) {
+    int answer = 0;
+    for(int i=0; i<n; i++){
+        if(visited[i]==0){
+            dfs(i,n,computers);
+            answer++;
+        }
+    }
+    return answer;
+}
+```
+#### dfs 타겟 넘버
+```C++
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+int answer = 0;
+// dfs 사용
+void get_target_number(vector<int> numbers, int target, int sum, int index){
+    // 종료 조건
+    if(index==numbers.size()){
+        if(sum==target){
+            answer++;
+        }
+        return;
+    }
+    get_target_number(numbers, target, sum+numbers[index], index+1);
+    get_target_number(numbers, target, sum-numbers[index], index+1);
+}
+int solution(vector<int> numbers, int target) {
+get_target_number(numbers, target, 0,0);
+    return answer;
+}
+```
 #### bfs 가장 먼 노드
 ```C++
 #include <string>
